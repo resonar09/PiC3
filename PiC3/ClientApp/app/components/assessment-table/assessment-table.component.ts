@@ -1,6 +1,8 @@
+
 import { Component, OnInit, Input } from '@angular/core';
 import { Http } from "@angular/http/http";
-import { ClientAssessmentService } from "../services/client.assessment.service";
+
+import { ClientAssessmentService } from '../../services/client.assessment.service';
 
 @Component({
   selector: 'app-assessment-table',

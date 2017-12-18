@@ -11,7 +11,7 @@ import { HomeComponent } from './components/home/home.component';
 
 import { AssessmentTableComponent } from './components/assessment-table/assessment-table.component';
 
-import { ClientAssessmentService } from "./components/services/client.assessment.service";
+import { ClientAssessmentService } from "./services/client.assessment.service";
 
 import { FilterPipe } from "./pipes/filter.pipe";
 import { OrderByPipe } from "./pipes/orderby.pipe";
