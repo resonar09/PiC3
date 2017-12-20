@@ -20,14 +20,14 @@ namespace PiC3.Controllers
         {
             _configuration = configuration;
         }
-        [AllowAnonymous]
+        
         [HttpGet("Test")]
         public IActionResult Test()
         {
             return Ok("Super secret content, I hope you've got clearance for this...");
         }
 
-        [AllowAnonymous]
+
         [HttpPost("post")]
         public IActionResult TestPost([FromBody] TokenRequest request)
         {
@@ -49,8 +49,8 @@ namespace PiC3.Controllers
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var token = new JwtSecurityToken(
-                    issuer: "localhost:54193",
-                    audience: "localhost:54193",
+                    issuer: "localhost:50840",
+                    audience: "localhost:50840",
                     claims: claims,
                     expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: creds);
