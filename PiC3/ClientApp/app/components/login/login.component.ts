@@ -10,5 +10,9 @@ export class LoginComponent {
     object: any;
     constructor() {
         this.object = Login;
+        //console.log(Login.buttons.login.label);
       }
+    login(){
+        console.log("login function");
+    }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 //import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'dynamic-form',
   templateUrl: './dynamic-form.component.html',
@@ -27,7 +28,6 @@ export class DynamicFormComponent implements OnInit {
   objectProps:any;
   objectControls:any;
   objectButtons:any;
-  //objectValidationCustom;
   objectKeys = Object.keys;
   title: string = "";
   background: string = "";
@@ -105,6 +105,9 @@ export class DynamicFormComponent implements OnInit {
           formValidators.push(Validators.max(validators[validation]));
         } else if (validation === 'pattern') {
           formValidators.push(Validators.pattern(validators[validation]));
+        } else if (validation === 'function') {
+          //console.log(validators[validation]);
+          formValidators.push(validators[validation]);
         } else if (validation === 'customs') {
           for (const custom of Object.keys(validators.customs)) {
             formValidators.push(validators.customs[custom].function);
@@ -112,6 +115,7 @@ export class DynamicFormComponent implements OnInit {
         }
       }
     }
+    console.log(formValidators);
     return formValidators;
   }
   getErrorMessage(key:string, prop:any) {
@@ -130,4 +134,13 @@ export class DynamicFormComponent implements OnInit {
   onSubmit(form:any) {
     console.log(form);
   }
+  onReset(form:any) {
+    console.log(form);
+  }
+  onCancel(form:any) {
+    console.log(form);
+  }
 }
+
+
+

@@ -1,4 +1,8 @@
-
+import { validateStarts } from "../validators/starts.validator";
+import { validateLogin } from "../validators/login.validator";
+import { validateMatching } from "../validators/matching.validator";
+import { patternValidator } from "../validators/pattern.validator";
+import { hasPunctuation } from "../validators/hasPunctuation.validator";
 
 export const Login = {
   settings: {
@@ -7,7 +11,7 @@ export const Login = {
     // subtitle: '',
     background: 'bg-light',
     debug: false,
-    layout: ''
+    layout: 'two-column'
   },
   controls: {
     username: {
@@ -16,7 +20,14 @@ export const Login = {
       value: '',
       type: 'text',
       validation: {
-        required: true
+        required: true,
+
+        customs: {
+          validateStarts: {
+            function: validateMatching,
+            message: 'Name must start with B'
+          }
+        }
       }
     },
     password: {
@@ -26,19 +37,29 @@ export const Login = {
       type: 'password',
       validation: {
         required: true
+/*         ,
+        customs: {
+          hasPunctuation: {
+            function: validateMatching('username'),
+            message: 'Must have puntuation'
+          }
+        } */
       }
     }
   },
-  buttons: {
-    login: {
-      label: 'Login',
-      type: 'submit',
-      class: 'btn-primary'
-    },
-    cancel: {
-      label: 'Cancel',
-      type: 'cancel',
-      class: 'btn-secondary'
+    buttons: {
+      login: {
+        label: 'Login',
+        type: 'button',
+        class: 'btn-primary'
+        , click: 'validateLogin()'
+
+      },
+      cancel: {
+        label: 'Cancel',
+        type: 'cancel',
+        class: 'btn-secondary'
+
+      }
     }
   }
-}
