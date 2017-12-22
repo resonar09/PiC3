@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Login } from '../../models/Login';
+import { CAD } from '../../models/demographics/CAD';
 
 @Component({
     selector: 'login',
@@ -9,7 +10,7 @@ import { Login } from '../../models/Login';
 export class LoginComponent {
     object: any;
     constructor() {
-        this.object = Login;
+        this.object = CAD;
         //console.log(Login.buttons.login.label);
       }
     login(){

@@ -39,19 +39,19 @@ export const Login = {
       }
     }
   },
-    buttons: {
-      login: {
-        label: 'Login',
-        type: 'button',
-        class: 'btn-primary'
-        , click: 'validateLogin()'
+  buttons: {
+    login: {
+      label: 'Login',
+      type: 'button',
+      class: 'btn-primary'
+      , click: 'validateLogin()'
 
-      },
-      cancel: {
-        label: 'Cancel',
-        type: 'cancel',
-        class: 'btn-secondary'
+    },
+    cancel: {
+      label: 'Cancel',
+      type: 'cancel',
+      class: 'btn-secondary'
 
-      }
     }
   }
+}

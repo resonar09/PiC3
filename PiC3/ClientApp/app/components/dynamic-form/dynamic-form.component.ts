@@ -86,7 +86,6 @@ export class DynamicFormComponent implements OnInit {
     }
     //create reactive form controls
     for (let prop of Object.keys(this.dataObject.controls)) {
-      console.log(prop);
       formGroup[prop] = new FormControl({ value: this.dataObject.controls[prop].value || '', disabled: this.dataObject.controls[prop].readOnly || false }, this.mapValidators(this.dataObject.controls[prop].validation));
     }
     this.form = new FormGroup(formGroup);
@@ -105,9 +104,6 @@ export class DynamicFormComponent implements OnInit {
           formValidators.push(Validators.max(validators[validation]));
         } else if (validation === 'pattern') {
           formValidators.push(Validators.pattern(validators[validation]));
-        } else if (validation === 'function') {
-          //console.log(validators[validation]);
-          formValidators.push(validators[validation]);
         } else if (validation === 'customs') {
           for (const custom of Object.keys(validators.customs)) {
             formValidators.push(validators.customs[custom].function);
@@ -115,7 +111,6 @@ export class DynamicFormComponent implements OnInit {
         }
       }
     }
-    console.log(formValidators);
     return formValidators;
   }
   getErrorMessage(key:string, prop:any) {

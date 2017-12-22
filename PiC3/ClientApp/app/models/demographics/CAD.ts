@@ -1,4 +1,4 @@
-
+import { automateAge } from "../../validators/age.automator";
 
 export const CAD = {
   settings: {
@@ -19,13 +19,19 @@ export const CAD = {
         required: true
       }
     },
-    date: {
+    dob: {
       label: 'Date',
       value: '',
       placeholder: '__/__/____',
       type: 'date',
       validation: {
-        required: true
+        required: true,
+        customs: {
+          validateMatching: {
+            function: automateAge('age'),
+            message: 'username and password must match'
+          }
+        }
       }
     },
     age: {
