@@ -20,14 +20,7 @@ export const Login = {
       value: '',
       type: 'text',
       validation: {
-        required: true,
-
-        customs: {
-          validateStarts: {
-            function: validateMatching,
-            message: 'Name must start with B'
-          }
-        }
+        required: true
       }
     },
     password: {
@@ -36,14 +29,13 @@ export const Login = {
       placeholder: 'Please enter your password.',
       type: 'password',
       validation: {
-        required: true
-/*         ,
+        required: true,
         customs: {
-          hasPunctuation: {
+          validateMatching: {
             function: validateMatching('username'),
-            message: 'Must have puntuation'
+            message: 'username and password must match'
           }
-        } */
+        }
       }
     }
   },
