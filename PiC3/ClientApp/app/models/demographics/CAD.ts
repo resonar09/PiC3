@@ -7,13 +7,14 @@ export const CAD = {
     // subtitle: '',
     background: 'bg-light',
     debug: false,
-    layout: 'two-column'
+    layout: ''
   },
   controls: {
     name: {
       label: 'Name',
       placeholder: 'Please enter your full name.',
       value: '',
+      class:'',
       type: 'text',
       validation: {
         required: true

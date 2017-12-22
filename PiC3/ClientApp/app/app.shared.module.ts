@@ -1,5 +1,6 @@
 
 
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +23,7 @@ import { OrderByPipe } from "./pipes/orderby.pipe";
 
 import { BrowserModule } from "@angular/platform-browser";
 
-
+import { Login } from './models/Login';
 
 @NgModule({
     declarations: [
@@ -50,7 +51,7 @@ import { BrowserModule } from "@angular/platform-browser";
         ])
         
     ],
-    providers: [ClientAssessmentService, AuthService] 
+    providers: [ClientAssessmentService, AuthService,Login] 
 })
 export class AppModuleShared {
 }

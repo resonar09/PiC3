@@ -1,9 +1,8 @@
+
 import { validateMatching } from "../validators/matching.validator";
 import { AuthService } from "../services/auth.service";
-import { Injectable } from "@angular/core";
 
-@Injectable()
-export class Login {
+export class Login1 {
   data = {
     settings: {
       label: 'Settings',
@@ -13,7 +12,7 @@ export class Login {
       debug: false,
       layout: 'two-column'
       ,
-      submit: this.loginSubmit
+      submit: this.eventLogin
     },
     controls: {
       username: {
@@ -57,12 +56,20 @@ export class Login {
       }
     }
   }
-  constructor(private auth: AuthService) { }
-  loginSubmit(form: any, auth: AuthService) {
-    console.log('login-onSubmit');
+
+  constructor() {
+
+  }
+  eventLogin(form: any) {
+    console.log('eventLogin');
     console.log(form);
-    this.auth.register(form);
     return null;
   }
+  clickEventLogin(form: any) {
+    console.log('clickEventLogin');
+    console.log(form);
+    console.log('if auth');
 
+    return null;
+  }
 }

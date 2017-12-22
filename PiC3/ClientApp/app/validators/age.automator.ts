@@ -14,11 +14,3 @@ export function automateAge(ageControl: string) {
     return null;
   };
 } 
-
-var timestamp=Date.parse('foo')
-
-if (isNaN(timestamp)==false)
-{
-    
-
-}

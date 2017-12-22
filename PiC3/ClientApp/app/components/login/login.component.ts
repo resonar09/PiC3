@@ -1,19 +1,30 @@
+
 import { Component } from '@angular/core';
 import { Login } from '../../models/Login';
-import { CAD } from '../../models/demographics/CAD';
+
+
 
 @Component({
     selector: 'login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    templateUrl: './login.component.html'
 })
 export class LoginComponent {
-    object: any;
-    constructor() {
-        this.object = CAD;
-        //console.log(Login.buttons.login.label);
-      }
-    login(){
-        console.log("login function");
+    data:any;
+    constructor(login:Login) {
+        this.data = login.data;
     }
+
+/*     onSubmit(form: any, auth:AuthService) {
+        console.log('login-onSubmit');
+        console.log(form);
+        this.auth.register(form);
+        return null;
+    }
+
+    eventLogin(form: any, auth:AuthService) {
+        console.log('eventLogin');
+        console.log(form);
+        this.auth.register(form);
+        return null;
+    } */
 }
