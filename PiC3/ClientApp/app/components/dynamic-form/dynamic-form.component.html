@@ -2,8 +2,9 @@
   <h2>{{title}}
     <small class="text-muted">{{subtitle}}</small>
   </h2>
-   <form novalidate (ngSubmit)="submit ? submit(form.value) : onSubmit(form.value)" [formGroup]="form"> 
-  <!--<form novalidate (ngSubmit)="onSubmit(form.value)" [formGroup]="form"> -->
+  <img [src]="brandingUrl" /> 
+  <form novalidate (ngSubmit)="submit ? submit(form.value) : onSubmit(form.value)" [formGroup]="form">
+    <!--<form novalidate (ngSubmit)="onSubmit(form.value)" [formGroup]="form"> -->
     <div [ngClass]="row">
       <div *ngFor="let control of objectControls" class="" [ngClass]="(control.size) ? control.size : col">
         <div *ngIf="control.type" class="form-group">
@@ -16,8 +17,20 @@
               [placeholder]="control.placeholder" [readonly]="control.readOnly">
             <input *ngSwitchCase="'date'" class="form-control" [formControlName]="control.key" [id]="control.key" [type]="control.type"
               [placeholder]="control.placeholder" [readonly]="control.readOnly">
-            <input *ngSwitchCase="'password'" class="form-control" [formControlName]="control.key" [id]="control.key" [type]="control.type"
-              [placeholder]="control.placeholder" [readonly]="control.readOnly">
+            <div *ngSwitchCase="'password'" class="input-group">
+              <span class="input-group-addon" id="sizing-addon1">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+              </span>
+              <input class="form-control" [formControlName]="control.key" [id]="control.key" [type]="control.type" [placeholder]="control.placeholder"
+                [readonly]="control.readOnly">
+            </div>
+            <div *ngSwitchCase="'username'" class="input-group">
+              <span class="input-group-addon" id="sizing-addon1">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </span>
+              <input class="form-control" [formControlName]="control.key" [id]="control.key" type="text" [placeholder]="control.placeholder"
+                [readonly]="control.readOnly">
+            </div>
             <div *ngSwitchCase="'email'" class="input-group">
               <span class="input-group-addon" id="sizing-addon1">
                 <i class="fa fa-envelope-o" aria-hidden="true"></i>

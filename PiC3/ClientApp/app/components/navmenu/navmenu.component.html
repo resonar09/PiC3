@@ -11,10 +11,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active pl-2 pr-2">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" routerLink = "/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item px-2">
-                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" routerLink = "/assess">Assess</a>
             </li>
             <li class="nav-item px-2">
                 <a class="nav-link" href="/Home/Contact">Clients</a>
@@ -32,17 +32,18 @@
 <!--         <form class="form-inline my-2 my-lg-0 hidden-xl-down">
             <input id="nav-search" class="form-control mr-sm-2 hidden-xl-down" type="search"  placeholder="Search assessments and clients" aria-label="Search">
         </form> -->
-        <div class="dropdown">
+        <div *ngIf="auth.isAuthenticated" class="dropdown">
             <button class="btn dropdown-toggle btn-link nav-account-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Justin Davis
+                <span>{{auth.username}}</span>
             </button>
+            <i class="fa fa-user-circle fa-2x align-middle"></i>
             <div id="nav-dropdown-menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">Account Settings</a>
                 <a class="dropdown-item" href="#">Help Center</a>
                 <a class="dropdown-item" href="#">Give us Feedback</a>
-                <a class="dropdown-item" href="/login">Login</a>
-                <a class="dropdown-item" href="/login">Log Out</a>
+                <a class="dropdown-item" (click)="auth.logout()">Log Out</a>
             </div>
         </div>
+        <a *ngIf="!auth.isAuthenticated" class="nav-link" routerLink = "/login">Login</a>
     </div>
 </nav>

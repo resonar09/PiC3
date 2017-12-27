@@ -23,7 +23,8 @@ import { OrderByPipe } from "./pipes/orderby.pipe";
 
 import { BrowserModule } from "@angular/platform-browser";
 
-import { Login } from './models/Login';
+import { LoginService } from './services/login.service';
+import { AssessComponent } from './components/assess/assess.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { Login } from './models/Login';
         NavMenuComponent,
         HomeComponent,
         LoginComponent,
+        AssessComponent,
         DynamicFormComponent,
         AssessmentTableComponent,
         FilterPipe,
@@ -47,11 +49,12 @@ import { Login } from './models/Login';
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'login', component: LoginComponent },
+            { path: 'assess', component: AssessComponent },
             { path: '**', redirectTo: 'home' }
         ])
         
     ],
-    providers: [ClientAssessmentService, AuthService,Login] 
+    providers: [ClientAssessmentService, AuthService,LoginService] 
 })
 export class AppModuleShared {
 }

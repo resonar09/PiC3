@@ -1,14 +1,22 @@
 
-<header>
-    <nav>
-        <nav-menu></nav-menu>
-    </nav>   
-</header>
+<div *ngIf="!auth.isAuth" class="d-flex align-items-center flex-column justify-content-center h-100">
+    <login></login>
 
-<div class='container-fluid main-content'>
-    <div class='row'>
-        <div class='col'>
-            <router-outlet></router-outlet>
+    
+</div>
+<h1>{{auth.isAuth}}</h1>
+<div *ngIf="auth.isAuth">
+    <header>
+        <nav>
+            <nav-menu></nav-menu>
+        </nav>
+    </header>
+
+    <div class='container-fluid main-content'>
+        <div class='row'>
+            <div class='col'>
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
 </div>

@@ -11,7 +11,9 @@ namespace PiC3.Controllers
 {
     public class JwtPacket
     {
+        
         public string Token { get; set; }
+        public string UserName { get; set; }
     }
 
     [Authorize]
@@ -32,7 +34,7 @@ namespace PiC3.Controllers
         {
             var jwt = new JwtSecurityToken();
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return Ok(new JwtPacket() { Token = encodedJwt });
+            return Ok(new JwtPacket() { Token = encodedJwt, UserName = user.UserName});
         }
 
 
