@@ -1,8 +1,9 @@
 <div class="container p-4" [ngClass]="background">
-  <h2>{{title}}
+  <img *ngIf="logo" alt="PAR" class="py-3" [src]="logo" />
+  <h2 *ngIf="!logo">{{title}}
     <small class="text-muted">{{subtitle}}</small>
   </h2>
-  <img [src]="brandingUrl" /> 
+
   <form novalidate (ngSubmit)="submit ? submit(form.value) : onSubmit(form.value)" [formGroup]="form">
     <!--<form novalidate (ngSubmit)="onSubmit(form.value)" [formGroup]="form"> -->
     <div [ngClass]="row">
@@ -67,7 +68,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex flex-row-reverse">
+    <div class="d-flex flex-row-reverse mt-3">
       <div *ngFor="let button of objectButtons" class="mr-2">
         <div [ngSwitch]="button.type">
           <button *ngSwitchCase="'cancel'" [disabled]="!form.valid" [type]="button.type" class="btn" [ngClass]="button.class">{{button.label}}</button>

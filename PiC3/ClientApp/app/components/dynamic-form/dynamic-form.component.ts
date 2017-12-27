@@ -26,6 +26,7 @@ import { AuthService } from '../../services/auth.service';
 export class DynamicFormComponent implements OnInit {
   @Input() dataObject:any;
   @Input() submitFunction:Function;
+
   form: FormGroup;
   objectProps:any;
   objectControls:any;
@@ -33,8 +34,8 @@ export class DynamicFormComponent implements OnInit {
   objectKeys = Object.keys;
   title: string = "";
   //branding: any;
-  branding:string = "";
-  //brandingURL: any;
+  logo:any;
+  brandingURL: any;
   background: string = "";
   subtitle: string = "";
   debug: boolean = false;
@@ -42,7 +43,7 @@ export class DynamicFormComponent implements OnInit {
   submit: Function;
   row: string = '';
   col: string = '';
-  //brandingURL  = require("../../assets/images/pic_logo_small.png");
+  
   constructor(private auth:AuthService) {
   }
   ngOnInit() {
@@ -73,9 +74,9 @@ export class DynamicFormComponent implements OnInit {
     this.layout = this.dataObject['settings'].layout;
     this.background = this.dataObject['settings'].background;
 
-    this.branding = this.dataObject['settings'].branding;
+    this.logo = this.dataObject['settings'].logo;
     //this.brandingURL = require(this.branding);
-    console.log(this.branding);
+    //console.log(this.branding);
     this.submit = this.dataObject['settings'].submit;
 
 
