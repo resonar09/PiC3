@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,7 +12,6 @@ namespace PiC3.Controllers
 {
     public class JwtPacket
     {
-        
         public string Token { get; set; }
         public string UserName { get; set; }
     }
@@ -47,7 +47,6 @@ namespace PiC3.Controllers
         public IActionResult Login([FromBody] LoginData loginData)
         {
             //check is user is authenticated in PiC
-
             return Ok(CreateJwtPacket(loginData));
         }
         JwtPacket CreateJwtPacket(LoginData loginData){
