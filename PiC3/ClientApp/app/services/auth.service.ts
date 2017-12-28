@@ -36,6 +36,21 @@ export class AuthService  {
             this.router.navigate(['/login']);
         }
     }
+    login(user: any) {
+        this.http.post(this.base + 'auth/login', user).subscribe(res => {
+            console.log('login');
+            var authResponse = res.json();
+            if (!authResponse.token)
+                return;
+            if (window.localStorage) {
+                this.isAuth = true;
+                localStorage.setItem(this.TOKEN_KEY, authResponse.token);
+                localStorage.setItem(this.USERNAME_KEY, authResponse.userName);
+            }
+            this.router.navigate(['/']);
+        });
+
+    }
     register(user: any) {
         this.http.post(this.base + 'auth/register', user).subscribe(res => {
             console.log('register');

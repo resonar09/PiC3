@@ -11,7 +11,7 @@ export class LoginService {
   loginSubmit(form: any, auth: AuthService) {
     console.log('login-onSubmit');
     console.log(form);
-    this.auth.register(form);
+    this.auth.login(form);
     return null;
   }
 

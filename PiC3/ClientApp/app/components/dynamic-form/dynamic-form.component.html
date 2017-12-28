@@ -4,8 +4,8 @@
     <small class="text-muted">{{subtitle}}</small>
   </h2>
 
-  <form novalidate (ngSubmit)="submit ? submit(form.value) : onSubmit(form.value)" [formGroup]="form">
-    <!--<form novalidate (ngSubmit)="onSubmit(form.value)" [formGroup]="form"> -->
+  <!-- <form novalidate (ngSubmit)="submit ? submit(form.value) : onSubmit(form.value)" [formGroup]="form"> -->
+    <form novalidate (ngSubmit)="onSubmit(form.value)" [formGroup]="form">
     <div [ngClass]="row">
       <div *ngFor="let control of objectControls" class="" [ngClass]="(control.size) ? control.size : col">
         <div *ngIf="control.type" class="form-group">

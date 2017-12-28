@@ -28,7 +28,8 @@ namespace PiC3
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-            services.AddMvc();
+
+            
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -36,7 +37,7 @@ namespace PiC3
 
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(appSettings.Secret);
 
             services.AddAuthentication(x =>
             {
@@ -52,9 +53,11 @@ namespace PiC3
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ValidateLifetime = false
                 };
             });
+            services.AddMvc();
 
         }
 

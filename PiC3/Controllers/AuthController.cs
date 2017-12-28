@@ -15,6 +15,10 @@ namespace PiC3.Controllers
         public string Token { get; set; }
         public string UserName { get; set; }
     }
+    public class LoginData{
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
 
     [Authorize]
     [Produces("application/json")]
@@ -38,6 +42,19 @@ namespace PiC3.Controllers
         }
 
 
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginData loginData)
+        {
+            //check is user is authenticated in PiC
+
+            return Ok(CreateJwtPacket(loginData));
+        }
+        JwtPacket CreateJwtPacket(LoginData loginData){
+                    var jwt = new JwtSecurityToken();
+                    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+                    return new JwtPacket() { Token = encodedJwt, UserName = loginData.UserName};
+        }
 
         [HttpGet("Test")]
         public IActionResult Test()

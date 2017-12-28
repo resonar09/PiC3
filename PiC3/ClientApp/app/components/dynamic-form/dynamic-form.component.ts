@@ -40,7 +40,6 @@ export class DynamicFormComponent implements OnInit {
   subtitle: string = "";
   debug: boolean = false;
   layout: string = "";
-  submit: Function;
   row: string = '';
   col: string = '';
   
@@ -63,10 +62,6 @@ export class DynamicFormComponent implements OnInit {
       });
     // setup the form
     const formGroup:any = {};
-
-    this.submit = this.submitFunction;
-    console.log(this.submit);
-
     // setup of general settings
     this.title = this.dataObject['settings'].title;
     this.debug = this.dataObject['settings'].debug;
@@ -77,7 +72,7 @@ export class DynamicFormComponent implements OnInit {
     this.logo = this.dataObject['settings'].logo;
     //this.brandingURL = require(this.branding);
     //console.log(this.branding);
-    this.submit = this.dataObject['settings'].submit;
+    //this.submit = this.dataObject['settings'].submit;
 
 
     // setup of layouts
@@ -142,9 +137,8 @@ export class DynamicFormComponent implements OnInit {
     }
   }
   onSubmit(form:any) {
-    console.log('onSubmit');
-    console.log(form);
-    this.auth.register(form);
+    console.log('onSubmit')
+    this.submitFunction(form);
   }
   onReset(form:any) {
     console.log(form);
