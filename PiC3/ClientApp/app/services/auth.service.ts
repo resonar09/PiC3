@@ -5,7 +5,7 @@ import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 
 
 @Injectable()
-export class AuthService  {
+export class AuthService {
     base: string;
     isBrowser: boolean;
     isAuth: boolean = false;
@@ -19,14 +19,20 @@ export class AuthService  {
         if (localStorage.getItem(this.USERNAME_KEY))
             return localStorage.getItem(this.USERNAME_KEY);
     }
-    get isAuthenticated() {
-        //console.log('isAuthenticated');
-        if (localStorage.getItem(this.TOKEN_KEY)){
-            console.log('service-isAuthenticated-get');
-            this.isAuth = true;
-            return this.isAuth;
-        }
+
+    get fullname() {
+        if (localStorage.getItem(this.USERNAME_KEY))
+            return localStorage.getItem(this.USERNAME_KEY);
     }
+    get isAuthenticated() {
+
+        let browserStorage = (typeof localStorage === 'undefined') ? null : localStorage;
+        if (browserStorage) {
+            return (browserStorage.getItem(this.TOKEN_KEY)) ? true : false;
+        }
+        return false;
+    }
+
 
     logout() {
         if (window.localStorage) {
@@ -38,26 +44,24 @@ export class AuthService  {
     }
     login(user: any) {
         this.http.post(this.base + 'auth/login', user).subscribe(res => {
-            console.log('login');
             this.authenticate(res);
         });
 
     }
     register(user: any) {
         this.http.post(this.base + 'auth/register', user).subscribe(res => {
-            console.log('register');
             this.authenticate(res);
         });
 
     }
-    authenticate(res: any){
+    authenticate(res: any) {
         var authResponse = res.json();
         if (!authResponse.token)
             return;
         if (window.localStorage) {
             this.isAuth = true;
             localStorage.setItem(this.TOKEN_KEY, authResponse.token);
-            localStorage.setItem(this.USERNAME_KEY, authResponse.userName);
+            localStorage.setItem(this.USERNAME_KEY, authResponse.fullName);
         }
         this.router.navigate(['/']);
     }

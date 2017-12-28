@@ -7,17 +7,28 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.Threading.Tasks;
 
 namespace PiC3.Controllers
 {
     public class JwtPacket
     {
         public string Token { get; set; }
-        public string UserName { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
     }
-    public class LoginData{
-        public string UserName { get; set; }
+    public class LoginData
+    {
+        public string Email { get; set; }
         public string Password { get; set; }
+    }
+    public class User
+    {
+        public string FullName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
     }
 
     [Authorize]
@@ -32,27 +43,49 @@ namespace PiC3.Controllers
             _configuration = configuration;
         }
 
-        [AllowAnonymous]
-        [HttpPost("register")]
-        public IActionResult Register([FromBody] Models.User user)
-        {
-            var jwt = new JwtSecurityToken();
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            return Ok(new JwtPacket() { Token = encodedJwt, UserName = user.UserName});
-        }
+        //[AllowAnonymous]
+        //[HttpPost("register")]
+        //public IActionResult Register([FromBody] Models.User user)
+        //{
+        //    var jwt = new JwtSecurityToken();
+        //    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+        //    return Ok(new JwtPacket() { Token = encodedJwt, FullName = user.UserName});
+        //}
 
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginData loginData)
+        public async Task<IActionResult> Login([FromBody] LoginData loginData)
         {
-            //check is user is authenticated in PiC
-            return Ok(CreateJwtPacket(loginData));
+            User user = new Controllers.User();
+            //bypass auth check
+            if (loginData.Email == "test@test.com")
+            {
+                user.FirstName = "Test";
+                user.LastName = "Test";
+                user.FullName = "Test Test";
+                user.Email = loginData.Email;
+                return Ok(CreateJwtPacket(user));
+            }
+            CorpServiceDevReference.UserServiceClient userServiceClient = new CorpServiceDevReference.UserServiceClient();
+            var userAuth = await userServiceClient.AuthenticateAsync(loginData.Email, loginData.Password);
+            if (userAuth.AuthenticateResult.Data != null)
+            {
+                user.FirstName = userAuth.AuthenticateResult.Data.FirstName;
+                user.LastName = userAuth.AuthenticateResult.Data.LastName;
+                user.FullName = user.FirstName + " " + user.LastName;
+                user.Email = loginData.Email;
+                return Ok(CreateJwtPacket(user));
+            }
+            return NotFound("Email or Password is incorrect.");
+
         }
-        JwtPacket CreateJwtPacket(LoginData loginData){
-                    var jwt = new JwtSecurityToken();
-                    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-                    return new JwtPacket() { Token = encodedJwt, UserName = loginData.UserName};
+        JwtPacket CreateJwtPacket(User user)
+        {
+            var jwt = new JwtSecurityToken();
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+           
+            return new JwtPacket() { Token = encodedJwt, FullName = user.FullName };
         }
 
         [HttpGet("Test")]
@@ -100,9 +133,9 @@ namespace PiC3.Controllers
 
     }
 
-/*     public class TokenRequest
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    } */
+    /*     public class TokenRequest
+        {
+            public string Username { get; set; }
+            public string Password { get; set; }
+        } */
 }

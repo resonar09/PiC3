@@ -1,5 +1,5 @@
 
-import { validateMatching } from "../validators/matching.validator";
+//import { validateMatching } from "../validators/matching.validator";
 //import {picLogoUrl} from "../../assets/images/pic_logo_small.png";
 
 export const Login = 
@@ -15,11 +15,11 @@ export const Login =
     //,submit: ''
   },
   controls: {
-    username: {
-      label: 'Username',
-      placeholder: 'Please enter your username.',
+    email: {
+      label: 'Email',
+      placeholder: 'Please enter your email.',
       value: '',
-      type: 'username',
+      type: 'email',
       validation: {
         required: true
       }
@@ -30,13 +30,7 @@ export const Login =
       placeholder: 'Please enter your password.',
       type: 'password',
       validation: {
-        required: true,
-        customs: {
-          validateMatching: {
-            function: validateMatching('username'),
-            message: 'username and password must match'
-          }
-        }
+        required: true
       }
     }
   },
