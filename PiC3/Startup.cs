@@ -38,6 +38,7 @@ namespace PiC3
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.UTF8.GetBytes(appSettings.Secret);
+            var signingKey = new SymmetricSecurityKey(key);
 
             services.AddAuthentication(x =>
             {
@@ -51,7 +52,7 @@ namespace PiC3
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = signingKey,
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = false

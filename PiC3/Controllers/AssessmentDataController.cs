@@ -7,15 +7,15 @@ using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using PiC3.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PiC3.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     public class AssessmentDataController : Controller
     {
-
         private readonly IHostingEnvironment _hostingEnvironment;
-
         public AssessmentDataController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -25,7 +25,6 @@ namespace PiC3.Controllers
         {
             try
             {
-
                 CoreServiceDevReference.CoreServiceClient coreServiceClient = new CoreServiceDevReference.CoreServiceClient();
                 if (await IsAlive())
                 {
@@ -63,7 +62,6 @@ namespace PiC3.Controllers
                 Debug.WriteLine(ex);
                 return null;
             }
-
         }
 
         [HttpGet("[action]/{id?}")]

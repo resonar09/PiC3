@@ -1,5 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 
@@ -10,19 +10,19 @@ export class AuthService {
     isBrowser: boolean;
     isAuth: boolean = false;
     TOKEN_KEY = "token";
-    USERNAME_KEY = "username";
+    FULLNAME_KEY = "fullname";
     constructor(private http: Http, @Inject('BASE_URL') baseUrl: string, private router: Router) {
         this.base = baseUrl;
     }
 
     get username() {
-        if (localStorage.getItem(this.USERNAME_KEY))
-            return localStorage.getItem(this.USERNAME_KEY);
+        if (localStorage.getItem(this.FULLNAME_KEY))
+            return localStorage.getItem(this.FULLNAME_KEY);
     }
 
     get fullname() {
-        if (localStorage.getItem(this.USERNAME_KEY))
-            return localStorage.getItem(this.USERNAME_KEY);
+        if (localStorage.getItem(this.FULLNAME_KEY))
+            return localStorage.getItem(this.FULLNAME_KEY);
     }
     get isAuthenticated() {
 
@@ -32,12 +32,15 @@ export class AuthService {
         }
         return false;
     }
-
+    get tokenHeader() {
+        var header = new Headers({ 'Authorization': 'Bearer ' + localStorage.getItem(this.TOKEN_KEY) });
+        return new RequestOptions({ headers: header });
+    }
 
     logout() {
         if (window.localStorage) {
             localStorage.removeItem(this.TOKEN_KEY);
-            localStorage.removeItem(this.USERNAME_KEY);
+            localStorage.removeItem(this.FULLNAME_KEY);
             this.isAuth = false;
             this.router.navigate(['/login']);
         }
@@ -61,7 +64,7 @@ export class AuthService {
         if (window.localStorage) {
             this.isAuth = true;
             localStorage.setItem(this.TOKEN_KEY, authResponse.token);
-            localStorage.setItem(this.USERNAME_KEY, authResponse.fullName);
+            localStorage.setItem(this.FULLNAME_KEY, authResponse.fullName);
         }
         this.router.navigate(['/']);
     }
