@@ -11,6 +11,8 @@ export class AuthService {
     isAuth: boolean = false;
     TOKEN_KEY = "token";
     FULLNAME_KEY = "fullname";
+    CONTACTID_KEY = "contactid";
+    ORGUSERMAPPING_KEY = "orgusermappingkey";
     constructor(private http: Http, @Inject('BASE_URL') baseUrl: string, private router: Router) {
         this.base = baseUrl;
     }
@@ -65,6 +67,8 @@ export class AuthService {
             this.isAuth = true;
             localStorage.setItem(this.TOKEN_KEY, authResponse.token);
             localStorage.setItem(this.FULLNAME_KEY, authResponse.fullName);
+            localStorage.setItem(this.CONTACTID_KEY, authResponse.contactId);
+            localStorage.setItem(this.ORGUSERMAPPING_KEY, authResponse.orgUserMappingKey);
         }
         this.router.navigate(['/']);
     }

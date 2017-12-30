@@ -16,6 +16,8 @@ namespace PiC3.Controllers
     public class JwtPacket
     {
         public string Token { get; set; }
+        public string ContactId { get; set; }
+        public string OrgUserMappingKey { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
     }
@@ -27,6 +29,7 @@ namespace PiC3.Controllers
     public class User
     {
         public string ContactId { get; set; }
+        public string OrgUserMappingKey { get; set; }
         public string FullName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -96,6 +99,7 @@ namespace PiC3.Controllers
             if (loginData.Email == "test@test.com")
             {
                 user.ContactId = "123456";
+                user.OrgUserMappingKey = "54338";
                 user.FirstName = "Test";
                 user.LastName = "Test";
                 user.FullName = "Test Test";
@@ -117,6 +121,7 @@ namespace PiC3.Controllers
             {
                 user.ContactId = userAuth.identities[0].UserData.ContactID;
                 user.FullName = userAuth.identities[0].UserData.FullName;
+                user.OrgUserMappingKey = userAuth.identities[0].OrgUserMapping.OrgUserMappingKey.ToString();
                 user.Email = loginData.Email;
                 return Ok(CreateJwtPacket(user));
             }
@@ -135,7 +140,7 @@ namespace PiC3.Controllers
             var jwt = new JwtSecurityToken(claims: claims, signingCredentials:signingCredentials);
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
            
-            return new JwtPacket() { Token = encodedJwt, FullName = user.FullName };
+            return new JwtPacket() { Token = encodedJwt, FullName = user.FullName, ContactId = user.ContactId, OrgUserMappingKey = user.OrgUserMappingKey};
         }
 
         [HttpGet("Test")]
