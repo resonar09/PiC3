@@ -2,6 +2,10 @@ import { Inject, Injectable, PLATFORM_ID, OnInit } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -48,16 +52,18 @@ export class AuthService {
         }
     }
     login(user: any) {
-        this.http.post(this.base + 'auth/login', user).subscribe(res => {
+        this.http.post(this.base + 'auth/login', user,this.requestOptions()).subscribe(res => {
             this.authenticate(res);
+        },
+        error => {
+            console.log(error);
+            this.handleError(error);
         });
-
     }
     register(user: any) {
-        this.http.post(this.base + 'auth/register', user).subscribe(res => {
+        this.http.post(this.base + 'auth/register', user,this.requestOptions()).subscribe(res => {
             this.authenticate(res);
         });
-
     }
     authenticate(res: any) {
         var authResponse = res.json();
@@ -71,5 +77,26 @@ export class AuthService {
             localStorage.setItem(this.ORGUSERMAPPING_KEY, authResponse.orgUserMappingKey);
         }
         this.router.navigate(['/']);
+    }
+    private requestOptions() {
+        const headers = new Headers({ 'Content-type': 'application/json' });
+        return new RequestOptions({ headers: headers });
+    }
+    private handleError(error: any) {
+        const applicationError = error.headers.get('Application-Error');
+        console.log(applicationError);
+        if (applicationError) {
+            return Observable.throw(applicationError);
+        }
+        const serverError = error.json();
+        let modelStateErrors = '';
+        if (serverError) {
+            for (const key in serverError) {
+                if (serverError[key]) {
+                    modelStateErrors += serverError[key] + '\n'
+                }
+            }
+        }
+        return Observable.throw(modelStateErrors || 'Server error');
     }
 }

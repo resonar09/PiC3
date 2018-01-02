@@ -44,7 +44,7 @@ namespace PiC3.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            throw new Exception("Computer is down!");
+            throw new Exception("It blowed up");
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
             var userFromRepo = await _repo.Login(loginDto.Email, loginDto.Password);
