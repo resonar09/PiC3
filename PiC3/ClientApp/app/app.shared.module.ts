@@ -1,11 +1,9 @@
-
-
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { BrowserModule } from "@angular/platform-browser";
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -20,8 +18,6 @@ import { AuthService } from './services/auth.service';
 
 import { FilterPipe } from "./pipes/filter.pipe";
 import { OrderByPipe } from "./pipes/orderby.pipe";
-
-import { BrowserModule } from "@angular/platform-browser";
 
 import { LoginService } from './services/login.service';
 import { AssessComponent } from './components/assess/assess.component';
@@ -54,7 +50,7 @@ import { AssessComponent } from './components/assess/assess.component';
         ])
         
     ],
-    providers: [ClientAssessmentService, AuthService,LoginService] 
+    providers: [ClientAssessmentService, AuthService, LoginService] 
 })
 export class AppModuleShared {
 }

@@ -1,4 +1,5 @@
 // Load required polyfills and testing libraries
+import "core-js/client/shim";
 import 'reflect-metadata';
 import 'zone.js';
 import 'zone.js/dist/long-stack-trace-zone';
