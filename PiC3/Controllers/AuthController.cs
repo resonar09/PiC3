@@ -30,7 +30,7 @@ namespace PiC3.Controllers
     [Route("auth")]
     public class AuthController : Controller
     {
-        private readonly IConfiguration _configuration;
+
         private readonly AppSettings _appSettings;
         private readonly IAuthRepository _repo;
 
@@ -44,11 +44,12 @@ namespace PiC3.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
             var userFromRepo = await _repo.Login(loginDto.Email, loginDto.Password);
             if (userFromRepo == null)
                 return Unauthorized();
             return Ok(CreateJwtPacket(userFromRepo));
-    
         }
 
         JwtPacket CreateJwtPacket(User user)
