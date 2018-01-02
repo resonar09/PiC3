@@ -8,6 +8,8 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using PiC3.Models;
 using Microsoft.AspNetCore.Authorization;
+using PiC3.Dtos;
+using PiC3.Repository;
 
 namespace PiC3.Controllers
 {
@@ -16,130 +18,24 @@ namespace PiC3.Controllers
     public class AssessmentDataController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
-        public AssessmentDataController(IHostingEnvironment hostingEnvironment)
+        private readonly IAssessmentReviewRepository _repo;
+        public AssessmentDataController(IHostingEnvironment hostingEnvironment, IAssessmentReviewRepository repo)
         {
+            _repo = repo;
             _hostingEnvironment = hostingEnvironment;
         }
-        [HttpGet("[action]/{id?}")]
-        public async Task<IEnumerable<AssessmentReviewDto>> GetAssessments(int? id)
-        {
-            try
-            {
-                CoreServiceDevReference.CoreServiceClient coreServiceClient = new CoreServiceDevReference.CoreServiceClient();
-                if (await IsAlive())
-                {
-                    var clientAssessments = await coreServiceClient.GetClientAssessmentsForReview_NEWAsync(null, 54338, null, null);
-
-                    var clientAsses = clientAssessments
-                        .Select(x => new AssessmentReviewDto
-                        {
-                            Assessment = x.AssessmentForm.Assessment.Name + " " + x.AssessmentForm.Name,
-                            ClientName = x.Client.FirstName + " " + x.Client.LastName,
-                            LastUpdated = x.TestDate,
-                            StatusKey = x.StatusKey
-                        });
-                    if (id > 0)
-                    {
-                        clientAsses = clientAsses.Where(x => x.StatusKey == id);
-                    }
-                    return clientAsses;
-                }
-                else if (_hostingEnvironment.IsDevelopment())
-                {
-                    string webRootPath = _hostingEnvironment.WebRootPath;
-                    var JSON = System.IO.File.ReadAllText(webRootPath + "/data/clientAssessments.json");
-                    var newClientAsses = JsonConvert.DeserializeObject<IEnumerable<AssessmentReviewDto>>(JSON);
-                    if (id > 0)
-                    {
-                        newClientAsses = newClientAsses.Where(x => x.StatusKey == id);
-                    }
-                    return newClientAsses;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-                return null;
-            }
-        }
 
         [HttpGet("[action]/{id?}")]
-        public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id)
+        public async Task<IActionResult> GetAssessmentsByStatus(int id)
         {
-            try
-            {
-                CoreServiceDevReference.CoreServiceClient coreServiceClient = new CoreServiceDevReference.CoreServiceClient();
-                if (await IsAlive())
-                {
-                    var clientAssessments = await coreServiceClient.GetClientAssessmentsForReview_NEWAsync(null, 54338, null, null); //54338
-
-                    var clientAsses = clientAssessments
-                        .Select(x => new AssessmentReviewDto
-                        {
-                            Assessment = x.AssessmentForm.Assessment.Name + " " + x.AssessmentForm.Name,
-                            ClientName = x.Client.FirstName + " " + x.Client.LastName,
-                            LastUpdated = x.TestDate,
-                            StatusKey = x.StatusKey
-                        });
-                    if (id > 0)
-                    {
-                        clientAsses = clientAsses.Where(x => StatusTypes.GetCompletedStatuses(true).Contains(x.StatusKey));
-                    }
-                    else
-                    {
-                        clientAsses = clientAsses.Where(x => StatusTypes.GetCompletedStatuses(false).Contains(x.StatusKey));
-                    }
-                    return clientAsses;
-                }
-                else if (_hostingEnvironment.IsDevelopment())
-                {
-                    string webRootPath = _hostingEnvironment.WebRootPath;
-                    var JSON = System.IO.File.ReadAllText(webRootPath + "/data/clientAssessments.json");
-                    var newClientAsses = JsonConvert.DeserializeObject<IEnumerable<AssessmentReviewDto>>(JSON);
-                    if (id > 0)
-                    {
-                        var statusTypeList = StatusTypes.GetCompletedStatuses(true).ToArray();
-
-                        Debug.WriteLine(statusTypeList);
-                        //newClientAsses = newClientAsses.Where(x => statusTypeList.Contains(x.StatusKey));
-                        //newClientAsses = newClientAsses.Where(x => x.StatusKey == 12);
-
-                        return newClientAsses.Where(x => statusTypeList.Contains(x.StatusKey));
-                    }
-                    else
-                    {
-                        var statusTypeList = StatusTypes.GetCompletedStatuses(false).ToArray();
-                        Debug.WriteLine(statusTypeList);
-                        //newClientAsses = newClientAsses.Where(x => x.StatusKey == 6);
-                        return newClientAsses.Where(x => statusTypeList.Contains(x.StatusKey));
-
-                    }
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-                return null;
-            }
+            var assReviewsFromRepo = await _repo.GetAssessmentsByStatus(id);
+            if (assReviewsFromRepo == null)
+                return NoContent();
+            return Ok(assReviewsFromRepo);
 
         }
 
-        [HttpGet("[action]")]
-        public string GetAssessmentsMock()
-        {
-            //if (_hostingEnvironment.IsDevelopment())
-            //{ }
-            string webRootPath = _hostingEnvironment.WebRootPath;
-            var JSON = System.IO.File.ReadAllText(webRootPath + "/data/clientAssessments.json");
-            return JSON;
-        }
-        [HttpGet("[action]")]
-        public string GetString()
-        {
-            return "test";
-        }
+
         [HttpGet("[action]")]
         public async Task<bool> IsAlive()
         {
@@ -157,46 +53,7 @@ namespace PiC3.Controllers
 
         }
     }
-    public class AssessmentReviewDto
-    {
-        private int _statusKey;
-        private string _status;
-        private bool _completed;
 
-        public string Assessment { get; set; }
-        public string ClientName { get; set; }
-        public DateTime? LastUpdated { get; set; }
-        public string Status
-        {
-            get
-            {
-                return _status;
-            }
-        }
-        public int StatusKey
-        {
-            get
-            {
-                return _statusKey;
-            }
-            set
-            {
-                _statusKey = value;
-                _status = ClientAssessmentStatus.GetStatus(value);
-                _completed = ClientAssessmentStatus.GetCompleted(value);
-            }
-        }
-
-        public bool Completed
-        {
-            get
-            {
-                return _completed;
-            }
-
-        }
-
-    }
 
     public sealed class ClientAssessmentStatus
     {

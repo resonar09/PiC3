@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+
 using PiC3.Helpers;
+using PiC3.Repository;
+using PiC3.Mocks;
 
 namespace PiC3
 {
@@ -29,7 +33,6 @@ namespace PiC3
         {
             services.AddCors();
 
-            
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -59,13 +62,30 @@ namespace PiC3
                 };
             });
             services.AddMvc();
+            services.AddScoped<IAuthRepository, AuthRepository>();
+            
+            Debug.WriteLine(appSettings.Mocks);
+            if (appSettings.Mocks)
+            {
+                services.AddScoped<IAssessmentReviewRepository, AssessmentReviewRepositoryMock>();
+            }
+             else
+            {
+                services.AddScoped<IAssessmentReviewRepository, AssessmentReviewRepository>();
+            } 
+
+
+
+
+
+            //services.AddScoped<IAssessmentReviewRepository, AssessmentReviewRepositoryMock>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
