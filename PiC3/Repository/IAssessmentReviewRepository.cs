@@ -7,5 +7,6 @@ namespace PiC3.Repository
     public interface IAssessmentReviewRepository
     {
          Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id);
+         Task<IEnumerable<AssessmentReviewDto>> GetAssessmentReviews(int id);
     }
 }

@@ -23,7 +23,7 @@ namespace PiC3.Repository
         //public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id)
         {
             string contentRootPath = _hostingEnvironment.ContentRootPath;
-            
+
             if (await IsAlive())
             {
                 CoreServiceDevReference.CoreServiceClient coreServiceClient = new CoreServiceDevReference.CoreServiceClient();
@@ -50,13 +50,33 @@ namespace PiC3.Repository
             }
             //else
             //{           
-                //var JSON = System.IO.File.ReadAllText(contentRootPath + "/data/clientAssessments.json");
-                //return JsonConvert.DeserializeObject<IEnumerable<AssessmentReviewDto>>(JSON);
+            //var JSON = System.IO.File.ReadAllText(contentRootPath + "/data/clientAssessments.json");
+            //return JsonConvert.DeserializeObject<IEnumerable<AssessmentReviewDto>>(JSON);
             //}
             return null;
 
-            
 
+
+        }
+
+        public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentReviews(int id)
+        //public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id)
+        {
+            string contentRootPath = _hostingEnvironment.ContentRootPath;
+            CoreServiceDevReference.CoreServiceClient coreServiceClient = new CoreServiceDevReference.CoreServiceClient();
+
+            var clientAssessmentReviews = await coreServiceClient.GetClientAssessmentsForReview_NEWAsync(null, id, null, null); //54338
+
+            var clientAssesReviews = clientAssessmentReviews
+                .Select(x => new AssessmentReviewDto
+                {
+                    Assessment = x.AssessmentForm.Assessment.Name + " " + x.AssessmentForm.Name,
+                    ClientName = x.Client.FirstName + " " + x.Client.LastName,
+                    LastUpdated = x.TestDate,
+                    StatusKey = x.StatusKey
+                });
+
+            return clientAssesReviews;
         }
 
         public async Task<bool> IsAlive()

@@ -32,9 +32,24 @@ namespace PiC3.Controllers
             if (assReviewsFromRepo == null)
                 return NoContent();
             return Ok(assReviewsFromRepo);
-
         }
 
+        [HttpGet("[action]/{id?}")]
+        public async Task<IActionResult> GetAssessmentReviews(int id)
+        {
+            if (id > 0)
+            {
+                var assReviewsFromRepo = await _repo.GetAssessmentReviews(id);
+                if (!assReviewsFromRepo.Any())
+                    return NoContent();
+                return Ok(assReviewsFromRepo);
+            }
+            else
+            {
+                ModelState.AddModelError("id", "ID must exist to retrieve assessment reviews.");
+                return BadRequest(ModelState);
+            }
+        }
 
         [HttpGet("[action]")]
         public async Task<bool> IsAlive()
