@@ -21,18 +21,22 @@ namespace PiC3
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; }
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        {
+            Environment = env;
+            Configuration = configuration;
+
+        }
+
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
-
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -63,23 +67,16 @@ namespace PiC3
             });
             services.AddMvc();
             services.AddScoped<IAuthRepository, AuthRepository>();
-            
+
             Debug.WriteLine(appSettings.Mocks);
-            if (appSettings.Mocks)
+            if (appSettings.Mocks && Environment.IsDevelopment())
             {
                 services.AddScoped<IAssessmentReviewRepository, AssessmentReviewRepositoryMock>();
             }
-             else
+            else
             {
                 services.AddScoped<IAssessmentReviewRepository, AssessmentReviewRepository>();
-            } 
-
-
-
-
-
-            //services.AddScoped<IAssessmentReviewRepository, AssessmentReviewRepositoryMock>();
-
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,6 +95,7 @@ namespace PiC3
             app.UseAuthentication();
             if (env.IsDevelopment())
             {
+
                 app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {

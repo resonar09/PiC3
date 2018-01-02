@@ -20,6 +20,14 @@ namespace PiC3.Mocks
             _hostingEnvironment = hostingEnvironment;
 
         }
+
+        public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentReviews(int id)
+        {
+            string contenRootPath = _hostingEnvironment.ContentRootPath;
+            var JSON = await System.IO.File.ReadAllTextAsync(contenRootPath + "/data/clientAssessments.json");
+            return JsonConvert.DeserializeObject<IEnumerable<AssessmentReviewDto>>(JSON);
+        }
+
         public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id)
         //public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id)
         {
