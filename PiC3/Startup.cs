@@ -16,6 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using PiC3.Helpers;
 using PiC3.Repository;
 using PiC3.Mocks;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace PiC3
 {
@@ -104,7 +106,18 @@ namespace PiC3
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler(builder => 
+                builder.Run(async context => {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+                    if(error != null){
+                        context.Response.AddApplicationError(error.Error.Message);
+                        byte[] message = Encoding.ASCII.GetBytes(error.Error.Message);
+                        await context.Response.Body.WriteAsync(message,0,message.Length);
+                    }
+                }
+                ));
             }
 
             app.UseStaticFiles();
