@@ -8,7 +8,6 @@ namespace PiC3.Dtos
         [EmailAddress]
         public string Email { get; set; }
         [Required]
-        [StringLength(6)]
         public string Password { get; set; }
     }
 }

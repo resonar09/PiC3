@@ -5,7 +5,7 @@
 export class FilterPipe implements PipeTransform {
     transform(value: any, filterString: string, propName: string): any {
         const resultArray = [];
-        if (typeof value !== 'undefined') {
+        if (typeof value !== 'undefined' && value) {
             if (value.length === 0 || filterString === '' || filterString.length < 3) {
                 return value;
             }
