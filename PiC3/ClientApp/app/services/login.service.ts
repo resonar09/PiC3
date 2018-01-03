@@ -6,13 +6,16 @@ import { Login } from "../models/Login";
 @Injectable()
 export class LoginService {
   data = Login;
-  constructor(private auth: AuthService) { 
+  constructor(private auth: AuthService) {
   }
   loginSubmit(form: any, auth: AuthService) {
     console.log('login-onSubmit');
     console.log(form);
-    this.auth.login(form);
-    return null;
+    this.auth.login(form).subscribe(data => {
+      console.log('logged in!');
+    },
+      error => {
+        console.log('failed to log in!');
+      });
   }
-
 }

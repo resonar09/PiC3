@@ -1,11 +1,12 @@
 import { Inject, Injectable, PLATFORM_ID, OnInit } from "@angular/core";
-import { Http, Headers, RequestOptions } from "@angular/http";
+import { Http, Headers, RequestOptions, Response } from "@angular/http";
 import { Router } from "@angular/router";
 import { isPlatformServer, isPlatformBrowser } from "@angular/common";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/catch";
 import "rxjs/add/observable/throw";
 import { Observable } from "rxjs/Observable";
+
 
 @Injectable()
 export class AuthService {
@@ -69,6 +70,14 @@ export class AuthService {
     }
   }
   login(user: any) {
+    return this.http.post(this.base + "auth/login", user, this.requestOptions())
+      .map((response:Response) => {
+        if(response){
+          this.authenticate(response);
+        }
+      }).catch(this.handleError);
+  }
+/*   login(user: any) {
     this.http
       .post(this.base + "auth/login", user, this.requestOptions())
       .subscribe(
@@ -80,7 +89,8 @@ export class AuthService {
           this.handleError(error);
         }
       );
-  }
+  } */
+
   register(user: any) {
     this.http
       .post(this.base + "auth/register", user, this.requestOptions())
@@ -96,10 +106,7 @@ export class AuthService {
       localStorage.setItem(this.TOKEN_KEY, authResponse.token);
       localStorage.setItem(this.FULLNAME_KEY, authResponse.fullName);
       localStorage.setItem(this.CONTACTID_KEY, authResponse.contactId);
-      localStorage.setItem(
-        this.ORGUSERMAPPING_KEY,
-        authResponse.orgUserMappingKey
-      );
+      localStorage.setItem(this.ORGUSERMAPPING_KEY,authResponse.orgUserMappingKey);
     }
     this.router.navigate(["/"]);
   }
