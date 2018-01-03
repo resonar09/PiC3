@@ -117,12 +117,18 @@ export class AuthService {
   private handleError(error: any) {
     const applicationError = error.headers.get("Application-Error");
     if (applicationError) {
+
       return Observable.throw(applicationError);
     }
     let modelStateErrors = "";
     let serverError = "Server error";
+    console.log(error);
     if(error.status == 401)
       serverError = "Email or Password are invalid."
+    if(error.status == 500){
+      serverError = "Internal Server Error.";
+      return Observable.throw(serverError);
+    }
     if (error._body) {
       const serverError = error.json();
       if (serverError) {
