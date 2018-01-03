@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -50,7 +50,7 @@ import { AssessComponent } from './components/assess/assess.component';
         ])
         
     ],
-    providers: [ClientAssessmentService, AuthService, LoginService] 
+    providers: [ClientAssessmentService, AuthService, LoginService, TitleCasePipe] 
 })
 export class AppModuleShared {
 }
