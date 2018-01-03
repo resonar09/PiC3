@@ -71,25 +71,25 @@ export class AuthService {
   }
   login(user: any) {
     return this.http.post(this.base + "auth/login", user, this.requestOptions())
-      .map((response:Response) => {
-        if(response){
+      .map((response: Response) => {
+        if (response) {
           this.authenticate(response);
         }
       }).catch(this.handleError);
   }
-/*   login(user: any) {
-    this.http
-      .post(this.base + "auth/login", user, this.requestOptions())
-      .subscribe(
-        res => {
-          this.authenticate(res);
-        },
-        error => {
-          console.log(error);
-          this.handleError(error);
-        }
-      );
-  } */
+  /*   login(user: any) {
+      this.http
+        .post(this.base + "auth/login", user, this.requestOptions())
+        .subscribe(
+          res => {
+            this.authenticate(res);
+          },
+          error => {
+            console.log(error);
+            this.handleError(error);
+          }
+        );
+    } */
 
   register(user: any) {
     this.http
@@ -106,7 +106,7 @@ export class AuthService {
       localStorage.setItem(this.TOKEN_KEY, authResponse.token);
       localStorage.setItem(this.FULLNAME_KEY, authResponse.fullName);
       localStorage.setItem(this.CONTACTID_KEY, authResponse.contactId);
-      localStorage.setItem(this.ORGUSERMAPPING_KEY,authResponse.orgUserMappingKey);
+      localStorage.setItem(this.ORGUSERMAPPING_KEY, authResponse.orgUserMappingKey);
     }
     this.router.navigate(["/"]);
   }
@@ -116,19 +116,23 @@ export class AuthService {
   }
   private handleError(error: any) {
     const applicationError = error.headers.get("Application-Error");
-    console.log(applicationError);
     if (applicationError) {
       return Observable.throw(applicationError);
     }
-    const serverError = error.json();
     let modelStateErrors = "";
-    if (serverError) {
-      for (const key in serverError) {
-        if (serverError[key]) {
-          modelStateErrors += serverError[key] + "\n";
+    let serverError = "Server error";
+    if(error.status == 401)
+      serverError = "Email or Password are invalid."
+    if (error._body) {
+      const serverError = error.json();
+      if (serverError) {
+        for (const key in serverError) {
+          if (serverError[key]) {
+            modelStateErrors += serverError[key] + "\n";
+          }
         }
       }
     }
-    return Observable.throw(modelStateErrors || "Server error");
+    return Observable.throw(modelStateErrors || serverError);
   }
 }

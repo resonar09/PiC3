@@ -137,14 +137,14 @@ export class DynamicFormComponent implements OnInit {
     }
   }
   onSubmit(form:any) {
-    console.log('onSubmit')
+    //console.log('onSubmit')
     this.submitFunction(form);
   }
   onReset(form:any) {
-    console.log(form);
+    //console.log(form);
   }
   onCancel(form:any) {
-    console.log(form);
+    //console.log(form);
   }
 }
 

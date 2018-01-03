@@ -9,8 +9,8 @@ export class LoginService {
   constructor(private auth: AuthService) {
   }
   loginSubmit(form: any, auth: AuthService) {
-    console.log('login-onSubmit');
-    console.log(form);
+    //console.log('login-onSubmit');
+    //console.log(form);
     this.auth.login(form).subscribe(data => {
       console.log('logged in!');
     },

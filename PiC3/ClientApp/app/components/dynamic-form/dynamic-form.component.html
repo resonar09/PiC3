@@ -73,7 +73,7 @@
         <div [ngSwitch]="button.type">
           <button *ngSwitchCase="'cancel'" [disabled]="!form.valid" [type]="button.type" class="btn" [ngClass]="button.class">{{button.label}}</button>
           <button *ngSwitchCase="'reset'" [disabled]="!form.valid" [type]="button.type" class="btn" [ngClass]="button.class">{{button.label}}</button>
-          <button *ngSwitchCase="'submit'" [disabled]="!form.valid" [type]="button.type" class="btn" [ngClass]="button.class">{{button.label}}</button>
+          <button *ngSwitchCase="'submit'" [disabled]="" [type]="button.type" class="btn" [ngClass]="button.class">{{button.label}}</button>
           <button *ngSwitchCase="'button'" [disabled]="!form.valid" [type]="button.type" class="btn" [ngClass]="button.class" (click)="button.click ? button.click(form.value) : onSubmit(form.value)">{{button.label}}</button>
         </div>
       </div>
