@@ -31,6 +31,7 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 import { AssessComponent } from './components/assess/assess.component';
 
 import { AssessmentTableComponent } from './components/assessment-table/assessment-table.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 import { ClientAssessmentService } from "./services/client.assessment.service";
 import { AuthService } from './services/auth.service';
@@ -39,6 +40,7 @@ import { LoginService } from './services/login.service';
 
 import { FilterPipe } from "./pipes/filter.pipe";
 import { OrderByPipe } from "./pipes/orderby.pipe";
+
 
 
 
@@ -51,6 +53,7 @@ import { OrderByPipe } from "./pipes/orderby.pipe";
         AssessComponent,
         DynamicFormComponent,
         AssessmentTableComponent,
+        NotificationComponent,
         FilterPipe,
         OrderByPipe
     ],
