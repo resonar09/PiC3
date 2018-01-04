@@ -5,6 +5,24 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from "@angular/platform-browser";
 
+import {
+    AlertModule, 
+//AccordionModule,
+//ButtonsModule,
+//CarouselModule,
+//CollapseModule,
+//BsDatepickerModule,
+BsDropdownModule,
+//ModalModule,
+//PaginationModule,
+//ProgressbarModule,
+//SortableModule,
+//TabsModule,
+//TimepickerModule,
+//TooltipModule,
+//TypeaheadModule
+} from 'ngx-bootstrap';
+
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -42,7 +60,8 @@ import { OrderByPipe } from "./pipes/orderby.pipe";
         HttpModule,
         FormsModule,
         ReactiveFormsModule,
-
+        AlertModule.forRoot(),
+        BsDropdownModule.forRoot(),
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
