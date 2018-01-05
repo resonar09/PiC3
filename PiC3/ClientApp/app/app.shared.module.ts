@@ -40,9 +40,7 @@ import { LoginService } from './services/login.service';
 
 import { FilterPipe } from "./pipes/filter.pipe";
 import { OrderByPipe } from "./pipes/orderby.pipe";
-
-
-
+import { NotificationService } from './services/notification.service';
 
 @NgModule({
     declarations: [
@@ -74,7 +72,7 @@ import { OrderByPipe } from "./pipes/orderby.pipe";
         ])
         
     ],
-    providers: [ClientAssessmentService, AuthService, LoginService, TitleCasePipe] 
+    providers: [ClientAssessmentService, AuthService, LoginService,NotificationService, TitleCasePipe] 
 })
 export class AppModuleShared {
 }

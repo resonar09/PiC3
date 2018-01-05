@@ -1,4 +1,8 @@
-<alert type="danger" dismissible="true" >
+
+<div *ngFor="let alert of alerts">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+  </div>
+<!-- <alert type="danger" dismissible="true" >
     <div class="d-flex notification">
         <div>
             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
@@ -27,4 +31,4 @@
             </a>
         </div>
     </div>
-</alert>
+</alert> -->
