@@ -2,6 +2,7 @@
 <div *ngFor="let alert of alerts">
     <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
   </div>
+  {{alerts | json}}
 <!-- <alert type="danger" dismissible="true" >
     <div class="d-flex notification">
         <div>

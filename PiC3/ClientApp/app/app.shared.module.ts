@@ -31,16 +31,19 @@ import { AssessComponent } from './components/assess/assess.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { DynamicFormComponent } from './components/_dynamic-form/dynamic-form.component';
 import { AssessmentTableComponent } from './components/_assessment-table/assessment-table.component';
-import { AlertComponent } from './components/_alert/alert.component';
+import { AlertsComponent } from './components/_alerts/alerts.component';
 import { NotificationComponent } from './components/_notification/notification.component';
 //Services
 import { ClientAssessmentService } from "./_services/client.assessment.service";
 import { AuthService } from './_services/auth.service';
 import { LoginService } from './_services/login.service';
 import { NotificationService } from './_services/notification.service';
+import { AlertService } from './_services/alert.service';
+
 //Pipes
 import { FilterPipe } from "./_pipes/filter.pipe";
 import { OrderByPipe } from "./_pipes/orderby.pipe";
+
 
 @NgModule({
     declarations: [
@@ -52,7 +55,7 @@ import { OrderByPipe } from "./_pipes/orderby.pipe";
         DynamicFormComponent,
         AssessmentTableComponent,
         NotificationComponent,
-        AlertComponent,
+        AlertsComponent,
         FilterPipe,
         OrderByPipe
     ],
@@ -73,7 +76,7 @@ import { OrderByPipe } from "./_pipes/orderby.pipe";
         ])
         
     ],
-    providers: [ClientAssessmentService, AuthService, LoginService,NotificationService, TitleCasePipe] 
+    providers: [ClientAssessmentService, AuthService, LoginService,NotificationService, AlertService,  TitleCasePipe] 
 })
 export class AppModuleShared {
 }

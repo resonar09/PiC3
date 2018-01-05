@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NotificationService } from "../../_services/notification.service";
 import { Observable, Subscription } from "rxjs";
 import { AuthService } from "../../_services/auth.service";
-//import { TimerObservable } from "rxjs/observable/TimerObservable";
+
 @Component({
   selector: "notification",
   templateUrl: "./notification.component.html",
@@ -21,16 +21,17 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.interval = 20000;
   }
   ngOnInit() {
-    //if(this.auth.isAuthenticated)
-    //this.notificationService.addNotifications('You have logged in!');
-    this.startTimer();
+    this.alerts = this.notificationService.notifications
+    //this.startTimer();
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    //this.sub.unsubscribe();
+  }
   private startTimer() {
     let timer = Observable.timer(1, this.interval);
     this.sub = timer.subscribe(t => {
       //this.notificationService.addNotifications('number: ' + this.counter++);
-      console.log('timer');
+      console.log('timer: '+ this.notificationService.notifications);
       this.alerts = this.notificationService.notifications
     });
   }
