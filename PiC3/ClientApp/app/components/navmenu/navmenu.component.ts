@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../_services/auth.service";
 import { TitleCasePipe } from "@angular/common";
 
 @Component({

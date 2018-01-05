@@ -1,0 +1,34 @@
+
+<div *ngFor="let alert of alerts">
+    <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
+  </div>
+<!-- <alert type="danger" dismissible="true" >
+    <div class="d-flex notification">
+        <div>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </div>
+        <div>
+            <small class="ml-2 font-weight-normal">Inventory Uses are low!</small>
+        </div>
+        <div class="ml-auto mr-4">
+            <a href="#" class="alert-link">
+                <small class="text-muted ">View</small>
+            </a>
+        </div>
+    </div>
+</alert>
+<alert type="success" dismissible="true">
+    <div class="d-flex notification">
+        <div>
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+        </div>
+        <div>
+            <small class="ml-2 font-weight-normal">You have undistributed uses.</small>
+        </div>
+        <div class="ml-auto mr-4">
+            <a href="#" class="alert-link ">
+                <small class="text-muted ">View</small>
+            </a>
+        </div>
+    </div>
+</alert> -->

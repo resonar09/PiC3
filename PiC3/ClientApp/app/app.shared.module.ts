@@ -1,12 +1,11 @@
+//Modules
 import { NgModule } from '@angular/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from "@angular/platform-browser";
-
-import {
-    AlertModule, 
+import {AlertModule, 
 //AccordionModule,
 //ButtonsModule,
 //CarouselModule,
@@ -22,25 +21,26 @@ BsDropdownModule,
 //TooltipModule,
 //TypeaheadModule
 } from 'ngx-bootstrap';
-
+//App Component
 import { AppComponent } from './components/app/app.component';
-import { NavMenuComponent } from './components/navmenu/navmenu.component';
+//Page Components
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { AssessComponent } from './components/assess/assess.component';
-
-import { AssessmentTableComponent } from './components/assessment-table/assessment-table.component';
-import { NotificationComponent } from './components/notification/notification.component';
-
-import { ClientAssessmentService } from "./services/client.assessment.service";
-import { AuthService } from './services/auth.service';
-import { LoginService } from './services/login.service';
-//import { AlertifyService } from './services/alertify.service';
-
-import { FilterPipe } from "./pipes/filter.pipe";
-import { OrderByPipe } from "./pipes/orderby.pipe";
-import { NotificationService } from './services/notification.service';
+//Components
+import { NavMenuComponent } from './components/navmenu/navmenu.component';
+import { DynamicFormComponent } from './components/_dynamic-form/dynamic-form.component';
+import { AssessmentTableComponent } from './components/_assessment-table/assessment-table.component';
+import { AlertComponent } from './components/_alert/alert.component';
+import { NotificationComponent } from './components/_notification/notification.component';
+//Services
+import { ClientAssessmentService } from "./_services/client.assessment.service";
+import { AuthService } from './_services/auth.service';
+import { LoginService } from './_services/login.service';
+import { NotificationService } from './_services/notification.service';
+//Pipes
+import { FilterPipe } from "./_pipes/filter.pipe";
+import { OrderByPipe } from "./_pipes/orderby.pipe";
 
 @NgModule({
     declarations: [
@@ -52,6 +52,7 @@ import { NotificationService } from './services/notification.service';
         DynamicFormComponent,
         AssessmentTableComponent,
         NotificationComponent,
+        AlertComponent,
         FilterPipe,
         OrderByPipe
     ],
