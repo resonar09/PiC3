@@ -20,7 +20,6 @@ namespace PiC3.Repository
 
         }
         public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id)
-        //public async Task<IEnumerable<AssessmentReviewDto>> GetAssessmentsByStatus(int id)
         {
             string contentRootPath = _hostingEnvironment.ContentRootPath;
 

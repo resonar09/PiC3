@@ -33,6 +33,7 @@ import { DynamicFormComponent } from './components/_dynamic-form/dynamic-form.co
 import { AssessmentTableComponent } from './components/_assessment-table/assessment-table.component';
 import { AlertsComponent } from './components/_alerts/alerts.component';
 import { NotificationComponent } from './components/_notification/notification.component';
+import { RecentAccessedComponent } from './components/_recent-accessed/recent-accessed.component';
 //Services
 import { ClientAssessmentService } from "./_services/client.assessment.service";
 import { AuthService } from './_services/auth.service';
@@ -43,6 +44,7 @@ import { AlertService } from './_services/alert.service';
 //Pipes
 import { FilterPipe } from "./_pipes/filter.pipe";
 import { OrderByPipe } from "./_pipes/orderby.pipe";
+
 
 
 @NgModule({
@@ -56,6 +58,7 @@ import { OrderByPipe } from "./_pipes/orderby.pipe";
         AssessmentTableComponent,
         NotificationComponent,
         AlertsComponent,
+        RecentAccessedComponent,
         FilterPipe,
         OrderByPipe
     ],

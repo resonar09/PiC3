@@ -13,9 +13,11 @@ export class AlertsComponent implements OnInit {
   interval: number = 1000;
   sub: Subscription;
   constructor(private alertService: AlertService) {
+    console.log('AlertsComponent-constructor');
     this.alerts = this.alertService.getAlerts();
   }
   ngOnInit() {
+    console.log('AlertsComponent-ngOnInit');
     this.alertService.getAlert().subscribe((alert: Alert) => {
       this.alerts = this.alertService.getAlerts();
     });
@@ -28,9 +30,9 @@ export class AlertsComponent implements OnInit {
         let now = new Date();
         let timeNow = now.getTime();
         let delta = timeNow - alert.timeCreated;
-        console.log("Now: {0}", timeNow);
-        console.log("Created: {0}", alert.timeCreated);
-        console.log("delta: {0}  timeout: {1}", delta, alert.timeout);
+        //console.log("Now: {0}", timeNow);
+        //console.log("Created: {0}", alert.timeCreated);
+        //console.log("delta: {0}  timeout: {1}", delta, alert.timeout);
         if (alert.timeout > 0) {
           if (delta > alert.timeout) {
             this.removeAlert(alert);
