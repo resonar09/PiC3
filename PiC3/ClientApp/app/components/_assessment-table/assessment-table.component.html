@@ -42,7 +42,7 @@
     </thead>
     <tbody>
         <ng-container *ngFor="let clientAssessment of getAssessmentReviewsByStatus() | filter:filteredStatus:'status' | orderBy: {property: column, direction: direction}">
-            <tr class="par-table-row" *ngIf="getAssessmentReviewsByStatus()">
+            <tr class="par-table-row" *ngIf="getAssessmentReviewsByStatus()" (click)="getAssessmentReview(clientAssessment)">
                 <td [ngClass]="clientAssessment.completed ? 'par-row-start-completed' : 'par-row-start-notcompleted'" class="par-row-start align-middle"
                     scope="row">
                     <!--style="border-left:red solid 5px;"-->

@@ -76,7 +76,13 @@ import { OrderByPipe } from "./_pipes/orderby.pipe";
         ])
         
     ],
-    providers: [ClientAssessmentService, AuthService, LoginService,NotificationService, AlertService,  TitleCasePipe] 
+    providers: [
+        ClientAssessmentService, 
+        AuthService, 
+        LoginService,
+        NotificationService, 
+        AlertService,  
+        TitleCasePipe] 
 })
 export class AppModuleShared {
 }

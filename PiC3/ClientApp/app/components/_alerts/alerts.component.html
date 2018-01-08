@@ -1,4 +1,18 @@
 <div *ngFor="let alert of alerts" class="{{ cssClass(alert) }} alert-dismissable">
-  {{alert.message}}
-  <a class="close" (click)="removeAlert(alert)">&times;</a>
+    <div class="d-flex">
+        <div>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        </div>
+        <div class="mx-2">
+            {{alert.message}}
+        </div>
+        <div class="ml-auto alert-link">
+            <a href="#">
+                <small>View Inventory</small>
+            </a>
+        </div>
+        <div class="ml-auto">
+            <a class="close" (click)="removeAlert(alert)">&times;</a>
+        </div>  
+      </div>
 </div>

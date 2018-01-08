@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../_services/auth.service';
+import { AlertService } from '../../_services/alert.service';
 //import { HttpClient } from '@angular/common/http';
 
 
@@ -43,7 +44,7 @@ export class DynamicFormComponent implements OnInit {
   row: string = '';
   col: string = '';
   
-  constructor(private auth:AuthService) {
+  constructor(private auth:AuthService, private alertService :AlertService) {
   }
   ngOnInit() {
     // remap the API to be suitable for iterating over it
@@ -138,6 +139,7 @@ export class DynamicFormComponent implements OnInit {
   }
   onSubmit(form:any) {
     //console.log('onSubmit')
+    this.alertService.success("Form Submitted", 0);
     this.submitFunction(form);
   }
   onReset(form:any) {

@@ -3,6 +3,7 @@ import { Http } from "@angular/http/http";
 
 import { ClientAssessmentService } from "../../_services/client.assessment.service";
 import { formArrayNameProvider } from "@angular/forms/src/directives/reactive_directives/form_group_name";
+import { AlertService } from "../../_services/alert.service";
 
 @Component({
   selector: "app-assessment-table",
@@ -18,7 +19,10 @@ export class AssessmentTableComponent implements OnInit {
   column: string = "CategoryName";
   direction: number;
   isLoading: boolean = true;
-  constructor(private clientAssessmentService: ClientAssessmentService) {}
+  constructor(
+    private clientAssessmentService: ClientAssessmentService
+    ,private alertService: AlertService
+  ) {}
 
   ngOnInit() {
     this.clientAssessmentService
@@ -37,6 +41,10 @@ export class AssessmentTableComponent implements OnInit {
       });
     }
     return filtered;
+  }
+  getAssessmentReview(clientAssessment:any){
+    console.log(clientAssessment);
+    this.alertService.info("you chose:" + clientAssessment.assessment, 5000);
   }
 
   sort(property: string) {
