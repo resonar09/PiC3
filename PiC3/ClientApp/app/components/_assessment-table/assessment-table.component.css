@@ -7,8 +7,10 @@
 
 .table-header {
     max-height: 50px;
-    background: #005596;
-    color: white;
+font-size:small;
+background: #e9ecef;
+/* background: #005596;
+    color: white; */
 }
 
 .table-header th {

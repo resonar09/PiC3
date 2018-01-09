@@ -27,6 +27,7 @@ import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { AssessComponent } from './components/assess/assess.component';
+import { ClientsComponent } from './components/clients/clients.component';
 //Components
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { DynamicFormComponent } from './components/_dynamic-form/dynamic-form.component';
@@ -47,6 +48,7 @@ import { OrderByPipe } from "./_pipes/orderby.pipe";
 
 
 
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -54,6 +56,7 @@ import { OrderByPipe } from "./_pipes/orderby.pipe";
         HomeComponent,
         LoginComponent,
         AssessComponent,
+        ClientsComponent,
         DynamicFormComponent,
         AssessmentTableComponent,
         NotificationComponent,
@@ -75,6 +78,9 @@ import { OrderByPipe } from "./_pipes/orderby.pipe";
             { path: 'home', component: HomeComponent },
             { path: 'login', component: LoginComponent },
             { path: 'assess', component: AssessComponent },
+            { path: 'clients', component: ClientsComponent },
+            { path: 'reports', component: AssessComponent },
+            { path: 'account', component: AssessComponent },
             { path: '**', redirectTo: 'home' }
         ])
         
